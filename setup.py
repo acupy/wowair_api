@@ -7,7 +7,7 @@ setup(
   author = 'Adam Czuprak',
   author_email = 'adam.czuprak@hotmail.com',
   url = 'https://github.com/acupy/wowair_api',
-  download_url = 'https://github.com/acupy/wowair_api/archive/0.1.tar.gz',
+  download_url = 'https://github.com/acupy/wowair_api/archive/0.3.tar.gz',
   keywords = ['wowair', 'api'],
   classifiers = [],
 )
