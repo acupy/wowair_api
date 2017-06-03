@@ -4,6 +4,7 @@ import requests
 from wowair import WowAirError
 from config import REQUEST_URL_TEMPLATE, CITY_URL
 from flight import Flight
+from thread import WowAirThread
 
 class WowAirQuery(object):
     def __init__(self, origin, destination=[], depart_date=(), adults=1):
@@ -69,20 +70,17 @@ class WowAirQuery(object):
         Return available flights
         :return list - list of Fligh objects
         """
+        threads = []
         flight_objs = []
-        for request_url in self.__get_urls():
-            request_result = requests.get(request_url)
-            flights = request_result.json()["flights"]
 
-            for flight in flights:
-                for fare in flight["fares"]:
-                    flight = Flight(flight["originShortName"].strip(),
-                                    flight["destinationShortName"].strip(),
-                                    flight["departureTime"],
-                                    fare["fareWithTaxes"],
-                                    fare["currency"],
-                                    flight["status"])
-                    flight_objs.append(flight)
+        for request_url in self.__get_urls():
+            the_thread = WowAirThread(WowAirQuery.__get_ticket_for_destination, request_url, flight_objs)
+            the_thread.start()
+            threads.append(the_thread)
+
+        for the_thread in threads:
+            the_thread.join()
+
         return flight_objs
 
     @staticmethod
@@ -94,6 +92,20 @@ class WowAirQuery(object):
         request_result = requests.get(CITY_URL)
         return dict([(city['origin'], city['origin_desc']) for city in request_result.json()])
 
+    @staticmethod
+    def __get_ticket_for_destination(request_url, flight_objs):
+        request_result = requests.get(request_url)
+        flights = request_result.json()["flights"]
+
+        for flight in flights:
+            for fare in flight["fares"]:
+                flight = Flight(flight["originShortName"].strip(),
+                                flight["destinationShortName"].strip(),
+                                flight["departureTime"],
+                                fare["fareWithTaxes"],
+                                fare["currency"],
+                                flight["status"])
+                flight_objs.append(flight)
     def __get_urls(self):
         """
         Return URLs to use in requests
