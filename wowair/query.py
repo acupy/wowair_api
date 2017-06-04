@@ -6,8 +6,17 @@ from config import REQUEST_URL_TEMPLATE, CITY_URL
 from flight import Flight
 from thread import WowAirThread
 
+class Currency(object):
+    CAD = "CAD"
+    DKK = "DKK"
+    EUR = "EUR"
+    GBP = "GBP"
+    ISK = "ISK"
+    USD = "USD"
+    SEK = "SEK"
+
 class WowAirQuery(object):
-    def __init__(self, origin, destination=[], depart_date=(), adults=1):
+    def __init__(self, origin, destination=[], depart_date=(), adults=1, currency=Currency.CAD):
         """
         Initialize WowAirQuery
         :param depart_date: date or tuple of date range, default range is a week
@@ -65,6 +74,9 @@ class WowAirQuery(object):
             # default values
             raise WowAirError('Number of adults is in a wrong format.')
 
+        # Currency
+        self.currency = currency
+
     def get_tickets(self):
         """
         Return available flights
@@ -106,6 +118,7 @@ class WowAirQuery(object):
                                 fare["currency"],
                                 flight["status"])
                 flight_objs.append(flight)
+
     def __get_urls(self):
         """
         Return URLs to use in requests
@@ -119,5 +132,6 @@ class WowAirQuery(object):
                                                      arrival_date_to=self.arrival_date_to.isoformat(),
                                                      origin=self.origin,
                                                      destination=destination,
-                                                     adults=self.adults))
+                                                     adults=self.adults,
+                                                     currency=self.currency))
         return links

@@ -1,4 +1,4 @@
-from wowair import WowAirQuery
+from wowair import WowAirQuery, Currency
 from datetime import timedelta, date
 
 # Fetch available cities
@@ -14,7 +14,9 @@ for ticket in query.get_tickets():
 # Fetch Available tickets for the NEXT 30 DAYS from New York to Anywhere
 depart_date_from = date.today()
 depart_date_to = depart_date_from + timedelta(days=30)
-query = WowAirQuery(origin='EWR', depart_date=(depart_date_from, depart_date_to))
+query = WowAirQuery(origin='EWR',
+                    depart_date=(depart_date_from, depart_date_to),
+                    currency=Currency.USD)
 for ticket in query.get_tickets():
     if ticket.status == 'Available':
         print ticket

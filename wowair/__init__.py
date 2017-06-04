@@ -1,2 +1,2 @@
 from error import WowAirError
-from query import WowAirQuery
+from query import WowAirQuery, Currency

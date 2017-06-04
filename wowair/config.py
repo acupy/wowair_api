@@ -11,7 +11,7 @@ __QUERY_STRING = ("departDateFrom={depart_date_from}&"
                  "culture=us&"
                  "infants=0&"
                  "children=0&"
-                 "currency=CAD&"
+                 "currency={currency}&"
                  "roundTrip=false&"
                  "adults={adults}&"
                  "promocode=")
