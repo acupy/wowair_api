@@ -21,8 +21,8 @@ Usage:
         print cities[c], c
 
     # Fetch tickets for the next week from Montreal to Dublin
-    wowair = WowAirQuery(origin='YUL', destination='DUB')
-    for ticket in wowair.get_tickets():
+    query = WowAirQuery(origin='YUL', destination='DUB')
+    for ticket in query.get_tickets():
         print ticket
 
     # Fetch Available tickets from New York to Anywhere in the NEXT 30 DAYS
