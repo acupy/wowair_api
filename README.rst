@@ -1,3 +1,12 @@
+.. image:: https://img.shields.io/pypi/v/wowair.svg
+   :target: https://pypi.python.org/pypi/wowair
+.. image:: https://img.shields.io/pypi/l/wowair.svg
+   :target: https://pypi.python.org/pypi/wowair
+.. image:: https://img.shields.io/github/issues/acupy/wowair_api.svg
+   :target: https://github.com/acupy/wowair_api
+.. image:: https://img.shields.io/github/issues-closed/acupy/wowair_api.svg
+   :target: https://github.com/acupy/wowair_api
+
 Install
 =======
 
